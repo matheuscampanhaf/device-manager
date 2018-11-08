@@ -468,13 +468,15 @@ class DeviceHandler(object):
         if verbose:
             result = {
                 'message': 'device created',
-                'device': full_device
+                'devices': full_device
             }
         else:
             result = {
                 'message': 'devices created',
                 'devices': devices
             }
+        
+        print(f"result: {result}")
         return result
 
     @staticmethod
@@ -937,7 +939,8 @@ def flask_create_device():
     try:
         result = DeviceHandler.create_device(request)
         devices = result.get('devices')
-        deviceId = devices[0].get('id')
+        print(f"devices: {devices}")
+        deviceId = devices.get('id')
         LOGGER.info(f' Creating a new device with id {deviceId}.')
         return make_response(jsonify(result), 200)
     except HTTPRequestError as e:
